@@ -3,7 +3,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:p2act/model/student.dart';
 import 'package:p2act/repository/repository.dart';
-
 part 'student_event.dart';
 part 'student_state.dart';
 

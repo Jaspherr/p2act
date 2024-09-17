@@ -1,3 +1,4 @@
+//studentRoutes.js
 const express = require('express');
 const Student = require('../models/student');
 const router = express.Router();
@@ -36,6 +37,7 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
+  console.log(`Received ID: ${req.params.id} (Type: ${typeof req.params.id})`);
   try {
     const student = await Student.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!student) {

@@ -64,10 +64,11 @@ class StudentRepository {
         Uri.parse('$apiUrl/$studentId'),
       );
 
-      if (response.statusCode == 204) {
-        await Future.delayed(const Duration(milliseconds: 500));
+      if (response.statusCode == 204 || response.statusCode == 200) {
+        // Both 200 OK and 204 No Content are acceptable
         print('Successfully deleted student with ID: $studentId');
       } else {
+        // Handle unsuccessful deletion
         print('Failed to delete student. Status code: ${response.statusCode}, Body: ${response.body}');
         throw Exception('Failed to delete student');
       }
