@@ -9,7 +9,6 @@ app.use(cors());
 
 app.use('/api/students', studentRoutes);
 
-// Updated connection code
 const mongoURI = 'mongodb+srv://p2act:p2act@cluster0.yvmjn.mongodb.net/students?retryWrites=true&w=majority';
 mongoose.connect(mongoURI)
   .then(() => console.log('MongoDB Connected'))
