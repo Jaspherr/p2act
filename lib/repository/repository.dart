@@ -1,3 +1,4 @@
+//repository.dart
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../model/student.dart';
@@ -47,10 +48,11 @@ class StudentRepository {
         headers: {'Content-Type': 'application/json'},
         body: json.encode(student.toJson()),
       );
-
-      if (response.statusCode != 200) {
+      if (response.statusCode == 200) {
+        print('Student updated successfully.');
+      } else {
         print('Failed to update student. Status code: ${response.statusCode}, Body: ${response.body}');
-        throw Exception('Failed to update student');
+        throw Exception('Failed to update student: ${response.body}');
       }
     } catch (e) {
       print('Exception while updating student: $e');
@@ -65,10 +67,8 @@ class StudentRepository {
       );
 
       if (response.statusCode == 204 || response.statusCode == 200) {
-        // Both 200 OK and 204 No Content are acceptable
         print('Successfully deleted student with ID: $studentId');
       } else {
-        // Handle unsuccessful deletion
         print('Failed to delete student. Status code: ${response.statusCode}, Body: ${response.body}');
         throw Exception('Failed to delete student');
       }

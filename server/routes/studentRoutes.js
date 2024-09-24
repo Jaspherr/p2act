@@ -37,16 +37,21 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  console.log(`Received ID: ${req.params.id} (Type: ${typeof req.params.id})`);
   try {
-    const student = await Student.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!student) {
-      return res.status(404).json({ message: 'Student not found' });
-    }
-    res.json(student);
+      const studentId = req.params.id;
+      const updateData = req.body;
+
+      const student = await Student.findById(studentId);
+      if (!student) {
+          return res.status(404).json({ message: "Student not found" });
+      }
+
+      Object.assign(student, updateData);
+      await student.save();
+      res.status(200).json(student);
   } catch (err) {
-    console.error('Error updating student:', err);
-    res.status(500).json({ message: 'Failed to update student', error: err.message });
+      console.error("Error updating student:", err);
+      res.status(500).json({ message: "Server error" });
   }
 });
 
