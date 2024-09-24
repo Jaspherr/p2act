@@ -19,7 +19,6 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
         }
         emit(StudentLoaded(students));
       } catch (e) {
-        print('Error loading data: $e');
         emit(const StudentError("Failed to load students"));
       }
     });

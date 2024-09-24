@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p2act/bloc/student_bloc.dart';
 import 'package:p2act/screens/form.dart';
+import 'package:p2act/screens/list.dart';
 import '../model/student.dart';
 import '../repository/repository.dart';
 
@@ -19,7 +22,6 @@ class StudentDetail extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 22,
-            letterSpacing: 1.2,
           ),
         ),
         centerTitle: true,
@@ -78,15 +80,19 @@ class StudentDetail extends StatelessWidget {
                               ),
                               TextButton(
                                 child: const Text('Delete'),
-                                onPressed: () => Navigator.of(context).pop(true),
+                                onPressed: () {
+                                  context.read<StudentBloc>().add(DeleteStudent(student.id));
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                    builder: (context) => StudentList(),
+                                    )
+                                  );
+                                },
                               ),
                             ],
                           ),
                         );
-                        if (confirmation == true) {
-                          await repository.deleteStudent(student.id);
-                          Navigator.of(context).pop(true);
-                        }
                       },
                     ),
                   ],

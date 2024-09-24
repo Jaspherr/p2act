@@ -1,6 +1,7 @@
 //form.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:p2act/screens/list.dart';
 import 'package:uuid/uuid.dart';
 import '../bloc/student_bloc.dart';
 import '../model/student.dart';
@@ -37,6 +38,13 @@ class _StudentFormState extends State<StudentForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor: Colors.transparent,
         title: Text(widget.student == null ? 'Add Student' : 'Edit Student', style: const TextStyle(fontWeight: FontWeight.bold)),
       ),
@@ -155,7 +163,12 @@ class _StudentFormState extends State<StudentForm> {
                           } else {
                             context.read<StudentBloc>().add(UpdateStudent(student));
                           }
-                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StudentList(),
+                            )
+                          );
                         } catch (e) {
                           print('Error adding or updating student: $e');
                           ScaffoldMessenger.of(context).showSnackBar(

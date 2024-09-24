@@ -13,6 +13,7 @@ class StudentList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('STUDENT LIST'),
         titleTextStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         actions: [
