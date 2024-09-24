@@ -28,10 +28,10 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
         try {
           await repository.addStudent(event.student);
           print('Student added: ${event.student}');
-          final currentStudents = (state as StudentLoaded).students;
-          final updatedStudents = List<Student>.from(currentStudents)
-            ..add(event.student);
-          emit(StudentLoaded(updatedStudents));
+          
+          // Refetch the latest students after adding
+          final students = await repository.fetchStudents();
+          emit(StudentLoaded(students));
         } catch (e) {
           print('Error adding student: $e');
           emit(const StudentError("Failed to add student"));
@@ -46,11 +46,10 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
         try {
           await repository.updateStudent(event.student);
           print('Student updated: ${event.student}');
-          final updatedStudents = (state as StudentLoaded)
-              .students
-              .map((student) => student.id == event.student.id ? event.student : student)
-              .toList();
-          emit(StudentLoaded(updatedStudents));
+          
+          // Refetch the latest students after updating
+          final students = await repository.fetchStudents();
+          emit(StudentLoaded(students));
         } catch (e) {
           print('Error updating student: $e');
           emit(const StudentError("Failed to update student"));
@@ -63,14 +62,12 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
         try {
           await repository.deleteStudent(event.studentId);
           print('Successfully deleted student with ID: ${event.studentId}');
-          final updatedStudents = (state as StudentLoaded)
-              .students
-              .where((student) => student.id != event.studentId)
-              .toList();
-          emit(StudentLoaded(updatedStudents));
-        } catch (e, stackTrace) {
+          
+          // Refetch the latest students after deleting
+          final students = await repository.fetchStudents();
+          emit(StudentLoaded(students));
+        } catch (e) {
           print('Error deleting student: $e');
-          print('Stack trace: $stackTrace');
           emit(StudentError('Failed to delete student: $e'));
         }
       }
