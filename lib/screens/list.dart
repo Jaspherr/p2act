@@ -15,7 +15,7 @@ class StudentList extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text('STUDENT LIST'),
-        titleTextStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        titleTextStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),

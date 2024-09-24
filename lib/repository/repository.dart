@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import '../model/student.dart';
 
 class StudentRepository {
-  final String apiUrl = 'http://192.168.1.12:5000/api/students';
+  final String apiUrl = 'https://p2act.onrender.com/api/students';
 
   Future<List<Student>> fetchStudents() async {
     try {
